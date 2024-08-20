@@ -1,5 +1,5 @@
 import { Link, useSearchParams } from "react-router-dom";
-import { Calendar } from "react-calendar";
+import { Calendar } from "react-calendar"; 
 import "../css/active.css";
 import Loader from "./Loader";
 import { useItems } from "../core/hooks";
