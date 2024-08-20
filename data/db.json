@@ -1,0 +1,90 @@
+{
+  "teams": [
+    {
+      "id": 1,
+      "name": "Team A",
+      "city": "City A",
+      "stadium": "Stadium A",
+      "players": [
+        {
+          "id": 101,
+          "name": "Player 1",
+          "position": "Forward",
+          "number": 9,
+          "goals": 10,
+          "assists": 5,
+          "yellow_cards": 1,
+          "red_cards": 0
+        },
+        {
+          "id": 102,
+          "name": "Player 2",
+          "position": "Midfielder",
+          "number": 8,
+          "goals": 4,
+          "assists": 7,
+          "yellow_cards": 2,
+          "red_cards": 1
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Team B",
+      "city": "City B",
+      "stadium": "Stadium B",
+      "players": [
+        {
+          "id": 201,
+          "name": "Player 3",
+          "position": "Defender",
+          "number": 4,
+          "goals": 1,
+          "assists": 2,
+          "yellow_cards": 3,
+          "red_cards": 0
+        },
+        {
+          "id": 202,
+          "name": "Player 4",
+          "position": "Goalkeeper",
+          "number": 1,
+          "goals": 0,
+          "assists": 0,
+          "yellow_cards": 0,
+          "red_cards": 0
+        }
+      ]
+    }
+  ],
+  "matches": [
+    {
+      "id": 1001,
+      "date": "2024-08-09",
+      "team_a": 1,
+      "team_b": 2,
+      "score_team_a": 2,
+      "score_team_b": 1,
+      "events": [
+        {
+          "minute": 15,
+          "team": 1,
+          "player_id": 101,
+          "event": "goal"
+        },
+        {
+          "minute": 55,
+          "team": 2,
+          "player_id": 201,
+          "event": "goal"
+        },
+        {
+          "minute": 75,
+          "team": 1,
+          "player_id": 102,
+          "event": "goal"
+        }
+      ]
+    }
+  ]
+}
