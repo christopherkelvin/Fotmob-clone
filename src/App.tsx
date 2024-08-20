@@ -8,9 +8,12 @@ import Overview from "./Components/Overview";
 import Matches from "./Components/Matches";
 import Stats from "./Components/Stats";
 import NotFound from './Pages/notFound';
+import { QueryClientProvider } from "react-query";
+import { queryClient } from "./core/api";
 function App() {
   return (
     <>
+      <QueryClientProvider client={queryClient}>
       <BrowserRouter>
         <Header />
         <Routes>
@@ -26,6 +29,7 @@ function App() {
           <Route path="*" element={<NotFound/>} />
         </Routes>
       </BrowserRouter>
+      </QueryClientProvider>
     </>
   );
 }
