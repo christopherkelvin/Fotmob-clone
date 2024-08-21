@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { debounce } from "lodash";
 import { Calendar } from "react-calendar";
 import { useSearchParams } from "react-router-dom";
 function Filter() {
@@ -13,7 +14,7 @@ function Filter() {
     { title: "On going", link: "/ongoing" },
     { title: "By Time", link: "" },
   ];
-  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onChange = debounce((e: React.ChangeEvent<HTMLInputElement>) => {
     const text = e.target.value;
     if (text.length === 0) {
       search.delete("filter");
@@ -22,7 +23,7 @@ function Filter() {
       search.set("filter", text);
       setSearch(search, { replace: true });
     }
-  };
+  },300);
   return (
     <>
       <div className=" w-full">
