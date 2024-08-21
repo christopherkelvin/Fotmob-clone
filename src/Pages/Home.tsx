@@ -5,7 +5,7 @@ export default function index() {
     return (
       <>
         <div className=" bg-black min-h-screen ">
-          <div className="flex flex-row">
+          <div className="grid grid-cols-home">
             <Hero />
             <Main />
             <Extra />

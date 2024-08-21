@@ -10,10 +10,9 @@ export function useItems(): UseQueryResult<{ [key: string]: Data[] }> {
     {}
   );
   const [, setIsLoading] = useState(false);
-
-  const $API_KEY =
-    "57f7f89e7a1f77522516238337039068ea330bf010a78517bacf37c1c3c4e487";
-  const $API_URL = `https://apiv3.apifootball.com/?action=get_events&from=${today}&to=${today}&timezone=Africa/Dar_es_Salaam&APIkey=${$API_KEY}`;
+  const apiKey = import.meta.env.VITE_API_KEY;
+  
+  const $API_URL = `https://apiv3.apifootball.com/?action=get_events&from=${today}&to=${today}&timezone=Africa/Dar_es_Salaam&APIkey=${apiKey}`;
 
   return useQuery(["Data", today], async () => {
     setIsLoading(true);

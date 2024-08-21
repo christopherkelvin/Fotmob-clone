@@ -1,10 +1,6 @@
 import { useEffect, useState } from "react";
-import  "../css/toggle.css";
-interface Data {
-  country_id: number;
-  country_name: string;
-  country_logo: string;
-}
+import "../css/toggle.css";
+import { Data } from "../core/types";
 function Leagues() {
   const [isVisible, setIsVisible] = useState(false);
   const [results, setResults] = useState<Data[]>([]);
@@ -12,23 +8,21 @@ function Leagues() {
     setIsVisible(!isVisible);
   };
   const [isLoading, setIsLoading] = useState(false);
-  const $API_KEY =
-    "57f7f89e7a1f77522516238337039068ea330bf010a78517bacf37c1c3c4e487";
+   const apiKey = import.meta.env.VITE_API_KEY;
   const $API_URL =
     "https://apiv3.apifootball.com/?action=get_countries&APIkey=";
   const [data, setData] = useState<Data[]>([]);
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
-      const response = await fetch(`${$API_URL}${$API_KEY}`);
+      const response = await fetch(`${$API_URL}${apiKey}`);
       const datas = (await response.json()) as Data[];
       setResults(datas);
       setData(datas);
       setIsLoading(false);
     };
     fetchData();
-   
-  }, []);
+  }, [$API_URL,apiKey]);
   const Filter = (e: React.ChangeEvent<HTMLInputElement>) => {
     setResults(data.filter(result => result.country_name.toLowerCase().includes(e.target.value.toLowerCase())));
   }
@@ -91,7 +85,6 @@ function Leagues() {
           </div>
         </div>
       </div>
-      ;
     </>
   );
 }

@@ -1,11 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import index from "../Pages/Home";
-interface Data {
-  match_awayteam_name: string;
-  match_hometeam_name: string;
-  match_time: string;
-}
+import { Data } from "../core/types";
 const headings = [
   { title: "#" },
   { title: ""},
@@ -22,8 +17,7 @@ function Overview() {
   const [isLoading, setIsLoading] = useState(false);
   const { id } = useParams();
   const today = new Date().toISOString().split("T")[0];
-  const API_KEY =
-    "57f7f89e7a1f77522516238337039068ea330bf010a78517bacf37c1c3c4e487";
+  const API_KEY = import.meta.env.VITE_API_KEY;
   const $API_URL = `https://apiv3.apifootball.com/?action=get_events&league_id=${id}&from=${today}&to=2025-08-01&APIkey=${API_KEY}`;
   const $STANDARD_URL = `https://apiv3.apifootball.com/?action=get_standings&league_id=${id}&APIkey=${API_KEY}
 `;
@@ -37,7 +31,7 @@ function Overview() {
         setIsLoading(false);
         setTeams(data);
       });
-  }, []);
+  }, [$API_URL, API_KEY]);
 
   useEffect(() => {
     fetch($STANDARD_URL)

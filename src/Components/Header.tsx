@@ -8,7 +8,7 @@ function Header() {
   };
   // console.log(isVisible);
   return (
-    <div className="bg-[#1d1d1d]">
+    <div className="bg-[#1d1d1d] fixed w-full">
       <link
         rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"

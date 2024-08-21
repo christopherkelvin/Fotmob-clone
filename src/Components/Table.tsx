@@ -1,10 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-interface Data {
-  match_awayteam_name: string;
-  match_hometeam_name: string;
-  match_time: string;
-}
+import { Data } from "../core/types";
 const headings = [
   { title: "#" },
   { title: "" },
@@ -18,8 +14,7 @@ const headings = [
   { title: "PTS" },
 ];
 function Table() {
-  const API_KEY =
-    "57f7f89e7a1f77522516238337039068ea330bf010a78517bacf37c1c3c4e487";
+  const API_KEY = import.meta.env.VITE_API_KEY;
   const { id } = useParams();
   const [standings, setStandings] = useState<Data[]>([]);
     const $STANDARD_URL = `https://apiv3.apifootball.com/?action=get_standings&league_id=${id}&APIkey=${API_KEY}`;

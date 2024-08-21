@@ -1,16 +1,8 @@
 import { useEffect, useState } from "react";
 import Loader from "./Loader";
-interface Data {
-  overall_league_position: number;
-  team_name: string;
-  overall_league_payed: number;
-  overall_league_GF: number;
-  overall_league_PTS: number;
-  team_badge: string;
-}
+import { Data } from "../core/types";
 function Extra() {
-  const $API_KEY =
-    "57f7f89e7a1f77522516238337039068ea330bf010a78517bacf37c1c3c4e487";
+   const apiKey = import.meta.env.VITE_API_KEY;
   const $API_URL =
     "https://apiv3.apifootball.com/?action=get_standings&league_id=";
   const $LEAGUE_ID = "152&APIkey=";
@@ -19,17 +11,17 @@ function Extra() {
   useEffect(() => {
     setIsLoading(true);
     const fetchData = async () => {
-      const response = await fetch(`${$API_URL}${$LEAGUE_ID}${$API_KEY}`);
+      const response = await fetch(`${$API_URL}${$LEAGUE_ID}${apiKey}`);
       const datas = (await response.json()) as Data[];
       setData(datas);
       setIsLoading(false);
     };
     fetchData();
-  }, []);
+  },[apiKey]);
 
   return (
     <>
-      <div className="2xl:w-1/4 xl:block md:hidden max-sm:hidden ">
+      <div className=" fixed right-12 top-20">
         <div className="h-auto font overflow-hidden font-walsheim text-white  bg-[#262626] 2xl:ml-0 xl:ml-3 mb-3 mr-10 mt-3 rounded-xl">
           <div className="p-4 bg-[#1d1d1d]">
             <h2 className=" font-bold text-gray-300 cursor-pointer">

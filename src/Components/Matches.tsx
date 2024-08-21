@@ -1,24 +1,19 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-interface Data {
-  match_awayteam_name: string;
-  match_hometeam_name: string;
-  match_time: string;
-}
+import { Data } from "../core/types";
 function Matches() {
   const today = new Date().toISOString().split("T")[0];
-  const API_KEY =
-    "57f7f89e7a1f77522516238337039068ea330bf010a78517bacf37c1c3c4e487";
+  const apiKey = import.meta.env.VITE_API_KEY;
   const { id } = useParams();
   const [matches, setMatches] = useState<Data[]>([]);
-  const [bydate, setBydate] = useState<Data[]>();
-  const $EVENT_URL = `https://apiv3.apifootball.com/?action=get_events&from=${today}&to=2025-08-18&league_id=${id}&APIkey=${API_KEY}`;
+  // const [bydate, setBydate] = useState<Data[]>();
+  const $EVENT_URL = `https://apiv3.apifootball.com/?action=get_events&from=${today}&to=2025-08-18&league_id=${id}&APIkey=${apiKey}`;
   useEffect(() => {
     fetch($EVENT_URL)
       .then((response) => response.json())
       .then((data) => {
         const groupedCompetitions = data.reduce(
-          (acc: { [x: string]: any[] }, bydate: { match_date: any }) => {
+          (acc: { [x: string]: unknown[] }, bydate: { match_date: unknown }) => {
             const key = `${bydate.match_date}`;
             if (!acc[key]) {
               acc[key] = [];
