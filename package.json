@@ -10,7 +10,11 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@radix-ui/react-scroll-area": "^1.1.0",
     "axios": "^1.7.4",
+    "class-variance-authority": "^0.7.0",
+    "clsx": "^2.1.1",
+    "lucide-react": "^0.429.0",
     "query": "^0.2.0",
     "react": "^18.3.1",
     "react-app": "file:",
@@ -18,7 +22,9 @@
     "react-dom": "^18.3.1",
     "react-lottie-player": "^2.1.0",
     "react-query": "^3.39.3",
-    "react-router-dom": "^6.26.0"
+    "react-router-dom": "^6.26.0",
+    "tailwind-merge": "^2.5.2",
+    "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
     "@eslint/js": "^9.8.0",
