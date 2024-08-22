@@ -15,10 +15,8 @@ function Filter() {
     setSearch(search, { replace: true });
     setSort(sort, { replace: true });
   };
-  const SortLive = () => {
-    console.log("Sort Live");
-    const text = "LiveTv";
-    sort.set("sort", text);
+  const filterLiveMatch = () => {
+    sort.set("sort", "1");
     setSearch(sort, { replace: true });
   };
   const SortFinished = () => {
@@ -71,7 +69,7 @@ function Filter() {
               All
             </button>
             <button
-              onClick={SortLive}
+              onClick={filterLiveMatch}
               className="ml-3 mr-3 py-2 px-4 text-sm font-walsheim text-white rounded-2xl bg-slate-500/30 hover:bg-slate-600/30"
             >
               On Going

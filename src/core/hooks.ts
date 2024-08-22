@@ -5,9 +5,6 @@ import { useState } from "react";
 import { useSearchParams } from "react-router-dom";
 
 
-const getMatchaEvents = () => {
-  
-}
 
 export function useItems(): UseQueryResult<{ [key: string]: Data[] }> {
   const today = new Date().toISOString().split("T")[0];
@@ -16,7 +13,7 @@ export function useItems(): UseQueryResult<{ [key: string]: Data[] }> {
   );
   const [, setIsLoading] = useState(false);
   const apiKey = import.meta.env.VITE_API_KEY;
-  
+
   const $API_URL = `https://apiv3.apifootball.com/?action=get_events&from=${today}&to=${today}&timezone=Africa/Dar_es_Salaam&APIkey=${apiKey}`;
   const [search] = useSearchParams();
   const [sort] = useSearchParams();
@@ -60,7 +57,7 @@ export function useItems(): UseQueryResult<{ [key: string]: Data[] }> {
       }
     }
 
-    
+
 const groupedCompetitions = datas.reduce((acc: { [x: string]: []; }, competition: { country_name: string; league_name: string; }) => {
       const key = `${competition.country_name} - ${competition.league_name}`;
       if (!acc[key]) {
