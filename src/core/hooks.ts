@@ -4,6 +4,11 @@ import { useQuery, UseQueryResult } from "react-query";
 import { useState } from "react";
 import { useSearchParams } from "react-router-dom";
 
+
+const getMatchaEvents = () => {
+  
+}
+
 export function useItems(): UseQueryResult<{ [key: string]: Data[] }> {
   const today = new Date().toISOString().split("T")[0];
   const [, setCompetitions] = useState<{ [key: string]: Data[] }>(
@@ -14,6 +19,7 @@ export function useItems(): UseQueryResult<{ [key: string]: Data[] }> {
   
   const $API_URL = `https://apiv3.apifootball.com/?action=get_events&from=${today}&to=${today}&timezone=Africa/Dar_es_Salaam&APIkey=${apiKey}`;
   const [search] = useSearchParams();
+  const [sort] = useSearchParams();
   return useQuery([today,search.toString()], async () => {
     setIsLoading(true);
     const response = await apiClient.get($API_URL, {
@@ -36,6 +42,22 @@ export function useItems(): UseQueryResult<{ [key: string]: Data[] }> {
           competition.country_name.toLowerCase().includes(searchValue) ||
           competition.league_name.toLowerCase().includes(searchValue)
       );
+    }
+    if (sort.toString()) {
+      const value = sort.get("sort")
+      switch (value) {
+        case 'Finished':
+         datas = datas.filter(
+           (competition: { match_status: string }) =>
+             competition.match_status === "Finished"
+         );
+          break;
+        case "LiveTv":
+          datas = datas.filter(
+            (competition: { match_live: string }) =>
+              competition.match_live === '1'
+          );
+      }
     }
 
     
