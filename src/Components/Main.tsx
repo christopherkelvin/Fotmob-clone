@@ -1,27 +1,35 @@
+import {matches} from "lodash";
 import {useEffect, useState} from "react";
 import {Link, useSearchParams} from "react-router-dom";
 import "../css/active.css";
-import {MatchEvent} from "../types";
+import {Match} from "../types";
 import {groupBy} from "../utils/group-by-name.ts";
 import {useMatchEvents} from "../hooks/useMatchEvents.ts";
 import Loader from "./Loader";
 import Filter from "./Filter";
 
 
-const transformMatchEvents = (matchEvents: MatchEvent[]) => {
+const transformMatchEvents = (matchEvents: Match[]) => {
     const transformed = matchEvents.map((event) => {
         return {
             ...event,
             league_name: `${event.country_name} - ${event.league_name}`,
         }
-    }) as never as MatchEvent[];
+    }) as never as Match[];
     return groupBy(transformed, "league_name");
 }
 
-const Main = () => {
-    const [matchEvents, setMatchEvents] = useState<MatchEvent[]>([]);
-    const [competitions, setCompetitions] = useState<Record<string, MatchEvent[]>>({})
+const handleSearch = (query:string, matches:Match[]):Record<string, Match[]> => {
+    // 1. perform search the return filtered matches
+    // 2. use <transformMatchEvents>  to transform match and group them by match league
+    return {}
+}
 
+
+const Main = () => {
+    const [matchEvents, setMatchEvents] = useState<Match[]>([]);
+    const [competitions, setCompetitions] = useState<Record<string, Match[]>>({})
+    const [search, setSearch] = useState("")
     const [searchParams] = useSearchParams();
 
     const {isLoading} = useMatchEvents({
@@ -31,10 +39,15 @@ const Main = () => {
         }
     });
 
+    useEffect(() => {
+        if(search && !isLoading && matchEvents.length> 0) {
+            setCompetitions(handleSearch(search, matchEvents));
+        }
+    }, [search]);
 
     // filter match events when searchParams changes
-    const filterLiveMatches = (_matchEvents: MatchEvent[]) => {
-        let filteredMatchEvents: MatchEvent[] = []
+    const filterLiveMatches = (_matchEvents: Match[]) => {
+        let filteredMatchEvents: Match[] = []
         const liveStatus = searchParams.get("sort");
 
         filteredMatchEvents = liveStatus
@@ -50,11 +63,10 @@ const Main = () => {
         filterLiveMatches(matchEvents)
     }, [searchParams]);
 
-
     return (
         <>
             <div className=" mt-20">
-                <Filter/>
+                <Filter onSearch={setSearch}/>
                 <div className="flex flex-col ">
                     {isLoading && <Loader/>}
                     {!isLoading &&

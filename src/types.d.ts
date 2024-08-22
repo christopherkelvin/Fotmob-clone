@@ -1,4 +1,4 @@
-export interface MatchEvent {
+export interface Match {
     match_id: string;
     country_id: string;
     country_name: string;
