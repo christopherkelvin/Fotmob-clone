@@ -33,7 +33,7 @@ module.exports = {
         chris: "30% 5% 24% 5% 30%",
         stading: "25px 50px 500px 50px 50px 50px 50px 50px 50px 50px",
         custom: "1fr 50px 1fr ",
-        home: " 350px  700px 380px",
+        home: " 350px  600px 3080px",
       },
       margin: {
         19: "72px",

@@ -1,43 +1,61 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { debounce } from "lodash";
 import { Calendar } from "react-calendar";
 import { useSearchParams } from "react-router-dom";
+
 function Filter() {
   const [isVisible, setIsVisible] = useState(false);
-  const [search, setSearch] = useSearchParams();
-  const [sort, setSort] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [liveActive, setLiveActive] = useState(false);
+  const [finishActive, setFinishActive] = useState(false);
+
+  useEffect(() => {
+    const sortParam = searchParams.get("sort");
+    setLiveActive(sortParam === "1");
+    setFinishActive(sortParam === "Finished");
+  }, [searchParams]);
+
   const toggleVisibility = () => {
     setIsVisible(!isVisible);
   };
+
   const reset = () => {
-    sort.delete("sort");
-    search.delete("filter");
-    setSearch(search, { replace: true });
-    setSort(sort, { replace: true });
+    setLiveActive(false);
+    setFinishActive(false);
+    searchParams.delete("sort");
+    searchParams.delete("filter");
+    setSearchParams(searchParams, { replace: true });
   };
+
   const filterLiveMatch = () => {
-    sort.set("sort", "1");
-    setSearch(sort, { replace: true });
+    const isActive = !liveActive;
+    setLiveActive(isActive);
+    setFinishActive(false);
+    searchParams.set("sort", isActive ? "1" : "");
+    setSearchParams(searchParams, { replace: true });
   };
-  const SortFinished = () => {
-     console.log("Sort Live");
-     const text = "Finished";
-     sort.set("sort", text);
-     setSearch(sort, { replace: true });
+
+  const filterFinishedMatch = () => {
+    const isActive = !finishActive;
+    setFinishActive(isActive);
+    setLiveActive(false);
+    searchParams.set("sort", isActive ? "Finished" : "");
+    setSearchParams(searchParams, { replace: true });
   };
+
   const onChange = debounce((e: React.ChangeEvent<HTMLInputElement>) => {
     const text = e.target.value;
     if (text.length === 0) {
-      search.delete("filter");
-      setSearch(search, { replace: true });
+      searchParams.delete("filter");
     } else {
-      search.set("filter", text);
-      setSearch(search, { replace: true });
+      searchParams.set("filter", text);
     }
+    setSearchParams(searchParams, { replace: true });
   }, 300);
+
   return (
     <>
-      <div className=" w-full">
+      <div className="w-full">
         {isVisible && (
           <Calendar
             value={new Date()}
@@ -70,17 +88,25 @@ function Filter() {
             </button>
             <button
               onClick={filterLiveMatch}
-              className="ml-3 mr-3 py-2 px-4 text-sm font-walsheim text-white rounded-2xl bg-slate-500/30 hover:bg-slate-600/30"
+              className={`ml-3 mr-3 py-2 px-4 text-sm rounded-2xl font-walsheim ${
+                liveActive
+                  ? "text-black bg-white font-bold"
+                  : "text-white  bg-slate-500/30 hover:bg-slate-600/30"
+              }`}
             >
               On Going
             </button>
             <button
-              onClick={SortFinished}
-              className="ml-3 mr-3 py-2 px-4 text-sm font-walsheim text-white rounded-2xl bg-slate-500/30 hover:bg-slate-600/30"
+              onClick={filterFinishedMatch}
+              className={`ml-3 mr-3 py-2 px-4 text-sm font-walsheim rounded-2xl ${
+                finishActive
+                  ? "text-black bg-white font-bold"
+                  : "text-white  bg-slate-500/30 hover:bg-slate-600/30"
+              }`}
             >
               Finished
             </button>
-            <span className="inline-block mx-8 mb-6">
+            <span className="inline-block mb-6">
               <input
                 type="text"
                 onChange={onChange}
@@ -94,4 +120,5 @@ function Filter() {
     </>
   );
 }
+
 export default Filter;

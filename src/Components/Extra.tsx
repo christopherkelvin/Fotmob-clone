@@ -22,7 +22,7 @@ function Extra() {
 
   return (
     <>
-      <div className=" fixed right-8 top-20 ">
+      <div className=" fixed right-0 top-16 ">
         <ScrollArea className="h-[630px] w-auto rounded-md p-4">
           <div className="h-auto font overflow-hidden font-walsheim text-white  bg-[#262626] 2xl:ml-0 xl:ml-3 mb-3 mr-10 mt-3 rounded-xl">
             <div className="p-4 bg-[#1d1d1d]">
