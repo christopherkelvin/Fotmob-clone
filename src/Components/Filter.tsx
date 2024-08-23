@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { debounce } from "lodash";
 import { Calendar } from "react-calendar";
 import { useSearchParams } from "react-router-dom";
 
@@ -8,17 +7,11 @@ function Filter() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [liveActive, setLiveActive] = useState(false);
   const [finishActive, setFinishActive] = useState(false);
-
-  useEffect(() => {
-    const sortParam = searchParams.get("sort");
-    setLiveActive(sortParam === "1");
-    setFinishActive(sortParam === "Finished");
-  }, [searchParams]);
-
+  
   const toggleVisibility = () => {
     setIsVisible(!isVisible);
   };
-
+  
   const reset = () => {
     setLiveActive(false);
     setFinishActive(false);
@@ -26,7 +19,13 @@ function Filter() {
     searchParams.delete("filter");
     setSearchParams(searchParams, { replace: true });
   };
-
+  
+    useEffect(() => {
+      const sortParam = searchParams.get("sort");
+      setLiveActive(sortParam === "1");
+      setFinishActive(sortParam === "Finished");
+    }, [searchParams]);
+  
   const filterLiveMatch = () => {
     const isActive = !liveActive;
     setLiveActive(isActive);
@@ -43,7 +42,7 @@ function Filter() {
     setSearchParams(searchParams, { replace: true });
   };
 
-  const onChange = debounce((e: React.ChangeEvent<HTMLInputElement>) => {
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const text = e.target.value;
     if (text.length === 0) {
       searchParams.delete("filter");
@@ -51,7 +50,7 @@ function Filter() {
       searchParams.set("filter", text);
     }
     setSearchParams(searchParams, { replace: true });
-  }, 300);
+  }
 
   return (
     <>
