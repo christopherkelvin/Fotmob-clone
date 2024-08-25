@@ -1,17 +1,19 @@
 import { useState, useEffect } from "react";
-import { Calendar } from "react-calendar";
 import { useSearchParams } from "react-router-dom";
+import { PrimeReactProvider } from "primereact/api";
+import { Calendar } from "primereact/calendar";
+import "primereact/resources/themes/lara-light-cyan/theme.css";
 
 function Filter() {
   const [isVisible, setIsVisible] = useState(false);
   const [searchParams, setSearchParams] = useSearchParams();
   const [liveActive, setLiveActive] = useState(false);
   const [finishActive, setFinishActive] = useState(false);
-  
+  const [date, setDate] = useState(new Date().toISOString().split("T")[0]);
   const toggleVisibility = () => {
     setIsVisible(!isVisible);
   };
-  
+
   const reset = () => {
     setLiveActive(false);
     setFinishActive(false);
@@ -19,13 +21,13 @@ function Filter() {
     searchParams.delete("filter");
     setSearchParams(searchParams, { replace: true });
   };
-  
-    useEffect(() => {
-      const sortParam = searchParams.get("sort");
-      setLiveActive(sortParam === "1");
-      setFinishActive(sortParam === "Finished");
-    }, [searchParams]);
-  
+
+  useEffect(() => {
+    const sortParam = searchParams.get("sort");
+    setLiveActive(sortParam === "1");
+    setFinishActive(sortParam === "Finished");
+  }, [searchParams]);
+
   const filterLiveMatch = () => {
     const isActive = !liveActive;
     setLiveActive(isActive);
@@ -50,16 +52,22 @@ function Filter() {
       searchParams.set("filter", text);
     }
     setSearchParams(searchParams, { replace: true });
-  }
+  };
 
   return (
     <>
       <div className="w-full">
         {isVisible && (
-          <Calendar
-            value={new Date()}
-            className="bg-white fixed inset-1/3 rounded-md overflow-hidden h-72"
-          />
+          <PrimeReactProvider>
+            <div className="fixed inset-1/3">
+              <Calendar
+                value={date}
+                onChange={(e) => setDate(date)}
+                inline
+                showWeek
+              />
+            </div>
+          </PrimeReactProvider>
         )}
         <div className="bg-[#1d1d1d] mt-3 rounded-xl h-auto">
           <div className="flex justify-center my-3 relative">

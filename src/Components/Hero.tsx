@@ -14,8 +14,8 @@ function Hero() {
   ];
 
   return (
-    <div className=" xl:block md:hidden max-sm:hidden ">
-      <div className=" fixed w-80 top-16">
+    <div className=" lg:block hidden max-sm:hidden ">
+      <div className=" fixed left-10 w-80 top-16">
         <ScrollArea className="h-[630px] w-auto rounded-md p-4">
           <div className="h-auto xl:p-1 md:p-2 font-walsheim text-white  bg-[#1d1d1d] xl:ml-10 2xl:ml-24 md:ml-2 mt-3 rounded-xl">
             <h1 className=" font-bold p-2 ml-2 text-xl md:pl-2 mb-3">

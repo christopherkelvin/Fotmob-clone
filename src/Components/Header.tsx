@@ -1,14 +1,15 @@
 import { useState } from "react";
-import  "../css/toggle.css";
+import "../css/toggle.css";
 import { Link } from "react-router-dom";
+
 function Header() {
   const [isVisible, setIsVisible] = useState(false);
-   const toggleVisibility = () => {
-     setIsVisible(!isVisible);
+  const toggleVisibility = () => {
+    setIsVisible(!isVisible);
   };
-  // console.log(isVisible);
+
   return (
-    <div className="bg-[#1d1d1d] fixed w-full">
+    <div className="bg-[#1d1d1d] top-0 fixed w-full z-50">
       <link
         rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
@@ -16,44 +17,61 @@ function Header() {
         crossOrigin="anonymous"
         referrerPolicy="no-referrer"
       />
-      <nav className="flex text-white  py-5">
-        <Link to="/" className=" font-bold px-9 text-3xl">
+      <nav className="flex items-center justify-between text-white py-5 px-4 md:px-9">
+        <Link to="/" className="font-bold text-2xl md:text-3xl">
           FOOTBALL APP
-          <i className="fa-solid fa-futbol ml-5"></i>
+          <i className="fa-solid fa-futbol ml-3 md:ml-5"></i>
         </Link>
-        <form action="" className=" relative sm:w-1/2 md:w-1/3 lg:w-1/4">
-          <i className="fa-solid text-white fa-magnifying-glass absolute top-4 left-3"></i>
+        <form action="" className="relative hidden md:block md:w-1/3 lg:w-1/4">
+          <i className="fa-solid fa-magnifying-glass absolute top-3 left-3"></i>
           <input
             type="text"
             name="search"
             placeholder="Search..."
-            className=" text-white placeholder:text-white mt-1 pl-10 font-dancing w-full h-9 rounded-3xl bg-[#262626]"
+            className="text-white placeholder:text-white pl-10 py-2 w-full rounded-3xl bg-[#262626]"
           />
         </form>
         <i
-          className={`absolute 2xl:hidden md:block right-4 mt-3 fa-solid fa-ellipsis-vertical`}
+          className="block md:hidden text-2xl cursor-pointer"
           onClick={toggleVisibility}
-        ></i>
-        <ul
-          className={`absolute md:flex-col xl:block md:mt-9 lg:mt-0 md:rounded-md md:bg-slate-800
-             lg:bg-inherit md:px-5 md:flex md:right-0 md:mr-2 
-            lg:right-9 font-extrabold text-lg pt-4${
-              isVisible ? "expand" : "collapse"
-            }`}
         >
-          <Link to="/details" className="mr-8 hover:underline">
-            News
-          </Link>
-          <Link to="/transfers" className="mr-8 hover:underline">
-            Transfers
-          </Link>
-          <Link to="/aboutus" className="mr-8 hover:underline">
-            About Us
-          </Link>
-          <i className="fa-solid fa-gear hover:text-slate-400 cursor-pointer"></i>
+          <i className="fa-solid fa-bars"></i>
+        </i>
+        <ul
+          className={`${
+            isVisible ? "block" : "hidden"
+          } absolute top-16 right-0 bg-[#262626] w-full md:w-auto md:relative md:flex md:items-center md:space-x-8 md:bg-transparent md:top-0 md:right-0 md:mt-0 p-4 md:p-0 md:border-none`}
+        >
+          <li className="md:inline-block">
+            <Link
+              to="/details"
+              className="block md:inline-block py-2 px-3 md:py-0 md:px-0 hover:underline"
+            >
+              News
+            </Link>
+          </li>
+          <li className="md:inline-block">
+            <Link
+              to="/transfers"
+              className="block md:inline-block py-2 px-3 md:py-0 md:px-0 hover:underline"
+            >
+              Transfers
+            </Link>
+          </li>
+          <li className="md:inline-block">
+            <Link
+              to="/aboutus"
+              className="block md:inline-block py-2 px-3 md:py-0 md:px-0 hover:underline"
+            >
+              About Us
+            </Link>
+          </li>
+          <li className="md:inline-block">
+            <i className="fa-solid fa-gear hover:text-slate-400 cursor-pointer block md:inline-block py-2 px-3 md:py-0 md:px-0"></i>
+          </li>
         </ul>
       </nav>
-      <hr className=" border-t-1 border-gray-500" />
+      <hr className="border-t-1 border-gray-500" />
     </div>
   );
 }
