@@ -44,12 +44,12 @@ const Main = () => {
       filteredMatchEvents = _matchEvents.filter(
         (match) =>
           match.match_hometeam_name
-            .toLowerCase()
+            ?.toLowerCase()
             .includes(filterParam.toLowerCase()) ||
           match.match_awayteam_name
-            .toLowerCase()
-            .includes(filterParam.toLowerCase()) ||
-          match.country_name.toLowerCase().includes(filterParam.toLowerCase())
+            ?.toLowerCase()
+            .includes(filterParam?.toLowerCase()) ||
+          match.country_name?.toLowerCase().includes(filterParam.toLowerCase())
       );
     } else {
       filteredMatchEvents = _matchEvents;
@@ -63,7 +63,7 @@ const Main = () => {
   }, [searchParams, matchEvents]);
 
   return (
-    <div className=" mt-[70px] w-full">
+    <div className="mt-20 mx-auto max-w-screen-lg">
       <Filter />
       <div className="flex flex-col">
         {isLoading && <Loader />}
