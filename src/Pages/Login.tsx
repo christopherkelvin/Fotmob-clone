@@ -1,16 +1,18 @@
 import { useRef } from "react";
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 import image from "../assets/Stadium.jpg";
-import LocalStorage from "@bonny-kato/localstorage";
+import { useAuth } from "../auth/AuthContext";
 
 const Login: React.FC = () => {
   const email = useRef<HTMLInputElement>(null);
   const password = useRef<HTMLInputElement>(null);
-  const lStorage = new LocalStorage("StorageKey");
+  const { login } = useAuth();
+  const navigate = useNavigate();
 
   const handleLogin = () => {
     if (email.current && password.current) {
-      lStorage.setValue("email", email.current.value);
-      lStorage.setValue("password", password.current.value);
+      login(email.current.value, password.current.value);
+      navigate("/");
     }
   };
 
@@ -33,7 +35,7 @@ const Login: React.FC = () => {
             <input
               type="email"
               placeholder="User Email"
-              className=" p-2 rounded-md w-full mb-4 bg-white/20 text-black placeholder:text-black"
+              className="p-2 rounded-md w-full mb-4 bg-white/20 text-black placeholder:text-black"
               ref={email}
             />
             <input

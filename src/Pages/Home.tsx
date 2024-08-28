@@ -8,7 +8,6 @@ export default function index() {
         <div className="lg:grid lg:grid-cols-home mx-10 ">
           <Hero />
             <Main />
-
           <Extra />
         </div>
       </div>
