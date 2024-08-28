@@ -3,15 +3,17 @@ import image from "../assets/Stadium.jpg";
 import LocalStorage from "@bonny-kato/localstorage";
 
 const Login: React.FC = () => {
-  const email = useRef();
-  const password = useRef();
+  const email = useRef<HTMLInputElement>(null);
+  const password = useRef<HTMLInputElement>(null);
   const lStorage = new LocalStorage("StorageKey");
+
   const handleLogin = () => {
-    if (email.current.value && password.current.value) {
-      lStorage.setValue('email', email.current.value);
-    lStorage.setValue("password", password.current.value);
-   }
-  }
+    if (email.current && password.current) {
+      lStorage.setValue("email", email.current.value);
+      lStorage.setValue("password", password.current.value);
+    }
+  };
+
   return (
     <>
       <div
@@ -40,8 +42,10 @@ const Login: React.FC = () => {
               className="p-2 rounded-md w-full mb-4 bg-white/20 text-white placeholder:text-black"
               ref={password}
             />
-            <button className="bg-white/10 hover:bg-white/40 hover:text-black/90 transition uppercase text-white p-2 rounded-md w-full"
-            onClick={handleLogin}>
+            <button
+              className="bg-white/10 hover:bg-white/40 hover:text-black/90 transition uppercase text-white p-2 rounded-md w-full"
+              onClick={handleLogin}
+            >
               Login
             </button>
           </div>
