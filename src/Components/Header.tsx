@@ -1,33 +1,17 @@
-import { useEffect, useState } from "react";
+import {  useState } from "react";
 import "../css/toggle.css";
 import { Link } from "react-router-dom";
-import Authentification from "./Authentification"
+
 
 function Header() {
   const [isVisible, setIsVisible] = useState(false);
-  const [loginVisible, setLoginVisible] = useState(false);
   const [setting, setSetting] = useState(false);
-  const toggleLogin = () => {
-      setSetting(false);
-      setLoginVisible(!loginVisible);
-    };
   const toggleVisibility = () => {
     setIsVisible(!isVisible);
   };
   const toggleSettings = () => {
     setSetting(!setting);
   };
-  const logOut = () => {
-    localStorage.removeItem("SignUp");
-    setAuth(false);
-  }
-   const localSignUp = localStorage.getItem("SignUp");
-   const [Auth, setAuth] = useState(false);
-   useEffect(() => {
-     if (localSignUp) {
-       setAuth(true);
-     }
-   });
   return (
     <div className="bg-[#1d1d1d] top-0 fixed w-full z-50">
       <link
@@ -90,29 +74,9 @@ function Header() {
             <i className="fa-solid fa-gear hover:text-slate-400 cursor-pointer block md:inline-block py-2 px-3 md:py-0 md:px-0"></i>
           </li>
         </ul>
-        {loginVisible && (
-          <>
-            <Authentification closeComponent={toggleLogin} />
-          </>
-        )}
         {setting && (
           <>
             <div className=" fixed right-10 top-20 rounded-xl bg-slate-600 flex flex-col overflow-hidden">
-              {Auth ? (
-                <button
-                  onClick={logOut}
-                  className="my-1 hover:bg-slate-700 px-8 py-2"
-                >
-                  Logout
-                </button>
-              ) : (
-                <button
-                  onClick={toggleLogin}
-                  className="my-1 hover:bg-slate-700 px-8 py-2"
-                >
-                  Log In
-                </button>
-              )}
               <a href="" className="my-1 hover:bg-slate-700 px-7 py-2">
                 Theme <span className=""> ☀️ </span> <span> 🌙 </span>
               </a>
