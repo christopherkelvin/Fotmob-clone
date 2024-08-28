@@ -11,7 +11,7 @@ import NotFound from "./Pages/notFound";
 import { QueryClientProvider } from "react-query";
 import { queryClient } from "./core/api";
 import Login from "./Pages/Login";
-import ProtectedRoutes from "./utils/ProtectedRoutes";
+import { ProtectedLogin , ProtectedRoutes} from "./utils/ProtectedRoutes";
 import { AuthProvider } from "./auth/AuthContext"; // Import AuthProvider
 
 function App() {
@@ -24,10 +24,11 @@ function App() {
           <BrowserRouter>
             <Header />
             <Routes>
+              <Route element={<ProtectedLogin/>}>
               <Route path="/login" element={<Login />} />
+              </Route>
               <Route element={<ProtectedRoutes />}>
                 <Route path="/" element={<Home />} />
-              </Route>
               <Route path="/details" element={<Details />} />
               <Route path="/league/:id/:name" element={<Leag />}>
                 <Route index element={<Overview />} />
@@ -35,6 +36,7 @@ function App() {
                 <Route path="table" element={<Table />} />
                 <Route path="matches" element={<Matches />} />
                 <Route path="stats" element={<Stats />} />
+              </Route>
               </Route>
               <Route path="*" element={<NotFound />} />
             </Routes>

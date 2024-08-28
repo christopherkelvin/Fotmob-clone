@@ -1,6 +1,5 @@
 import React, { createContext, useState, useEffect, ReactNode } from "react";
 import LocalStorage from "@bonny-kato/localstorage";
-import { Navigate } from "react-router-dom";
 
 interface AuthContextType {
   user: boolean;
@@ -14,27 +13,26 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
   const lStorage = new LocalStorage("StorageKey");
-  const [user, setUser] = useState<boolean>(false);
-
+    const [user, setUser] = useState<boolean>(() => {
+        const signedIn = lStorage.getValue("signedIn");
+        return !!(signedIn);
+  });
+  const signedIn = lStorage.getValue("signedIn");
   useEffect(() => {
-    const storedEmail = lStorage.getValue("email");
-    const storedPassword = lStorage.getValue("password");
-
-    if (storedEmail && storedPassword) {
+    if (signedIn) {
       setUser(true);
-    }
-  }, [lStorage]);
+    } 
+  }, [signedIn]);
 
   const login = (email: string, password: string) => {
     lStorage.setValue("email", email);
     lStorage.setValue("password", password);
-      setUser(true);
-      <Navigate to="/" />;
+    lStorage.setValue("signedIn", email);
+    setUser(true);
   };
 
   const logout = () => {
-    lStorage.removeValues("email");
-    lStorage.removeValues("password");
+    lStorage.removeValues("signedIn");
     setUser(false);
   };
 

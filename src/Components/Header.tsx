@@ -1,11 +1,18 @@
 import {  useState } from "react";
 import "../css/toggle.css";
 import { Link } from "react-router-dom";
+import { useAuth } from "../auth/AuthContext";
+import { HiLogout } from "react-icons/hi";
 
 
 function Header() {
   const [isVisible, setIsVisible] = useState(false);
   const [setting, setSetting] = useState(false);
+  const { user, logout } = useAuth();
+  const handleLogout = () => {
+    setSetting(false);
+    logout();
+  }
   const toggleVisibility = () => {
     setIsVisible(!isVisible);
   };
@@ -76,7 +83,10 @@ function Header() {
         </ul>
         {setting && (
           <>
-            <div className=" fixed right-10 top-20 rounded-xl bg-slate-600 flex flex-col overflow-hidden">
+            <div className=" fixed right-10 top-24 rounded-xl bg-slate-600 flex flex-col overflow-hidden">
+              {user ? <button className="flex items-center justify-center hover:bg-slate-700 gap-3 px-7 py-2" onClick={handleLogout}>
+                Logout <HiLogout />
+              </button>: null}
               <a href="" className="my-1 hover:bg-slate-700 px-7 py-2">
                 Theme <span className=""> ☀️ </span> <span> 🌙 </span>
               </a>
